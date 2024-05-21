@@ -322,6 +322,7 @@ const MultiSelectDropdown = ({
     return count;
   };
 
+
   const selectOptionThroughKeys = (e, option) => {
     let checked = alreadyQueuedSelectedState.find(
       (selectedOption) => selectedOption.code === option.code

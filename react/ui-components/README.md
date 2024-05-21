@@ -58,6 +58,7 @@ yarn storybook
 # Changelog
 
 ```bash
+0.0.1-beta.24 added uploader variants
 0.0.1-beta.23 Updated ErrorMessage component to have new props named showIcon,truncateMessage and maxLength
 0.0.1-beta.22 From this version of ui-components the Toast component will have a new prop named type, replacing the seperate props for  info,warning and error
 0.0.1-beta.21 Added categorySelectAllState in the nestedmultiselect variant of multiselectdropdown
@@ -65,7 +66,7 @@ yarn storybook
 0.0.1-beta.19 making CheckBox more customizable and adding custom color for Button
 0.0.1-beta.18 updated dropdown option labels
 0.0.1-beta.17 updated toast info varinat css and category option css 
-0.0.1-beta.16 added erroe boundary atom
+0.0.1-beta.16 added error boundary atom
 0.0.1-beta.15 added info varinat for toast
 0.0.1-beta.14 updated dropdown options label to use optionsKey
 0.0.1-beta.13 nested and tree dropdown varinat updated
