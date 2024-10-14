@@ -10,7 +10,7 @@ import {
   MultiSelectDropdown,
   MobileNumber,
   InputTextAmount,
-  Stepper,
+  StringManipulator,
 } from "../atoms";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
@@ -49,9 +49,13 @@ const FieldV1 = ({
   const { t } = useTranslation();
   let disableFormValidation = false;
   if (sectionFormCategory && selectedFormCategory) {
-    disableFormValidation = sectionFormCategory !== selectedFormCategory ? true : false;
+    disableFormValidation =
+      sectionFormCategory !== selectedFormCategory ? true : false;
   }
-  const Component = typeof component === "string" ? Digit.ComponentRegistryService.getComponent(component) : component;
+  const Component =
+    typeof component === "string"
+      ? Digit.ComponentRegistryService.getComponent(component)
+      : component;
   const customValidation = config?.populators?.validation?.customValidation;
   const customRules = customValidation ? { validate: customValidation } : {};
   const customProps = config?.customProps;
@@ -64,39 +68,37 @@ const FieldV1 = ({
 
   const renderCharCount = () => {
     if (charCount) {
-      const maxCharacters = populators?.validation?.maxlength || 50;
+      const maxCharacters = populators?.validation?.maxlength || 0;
       return (
-        <CardText style={{ marginTop: "0px", fontSize: "0.875rem", lineHeight: "1.5rem" }}>
+        <CardText
+          style={{
+            marginTop: "0px",
+            fontSize: "0.875rem",
+            lineHeight: "1.5rem",
+          }}
+        >
           {currentCharCount}/{maxCharacters}
         </CardText>
       );
     }
   };
 
-  //To truncate the message upto maxlength
-  const truncateMessage = (message, maxLength) => {
-    if (message.length > maxLength) {
-      return message.slice(0, maxLength) + "...";
-    }
-    return message;
-  };
-
   // To render the description or the error message
   const renderDescriptionOrError = () => {
     if (error) {
       return (
-        <div className="digit-error" style={{width: !charCount ? "100%" : "90%", whiteSpace: "pre-wrap", wordBreak: "break-word", marginTop: "0px" }}>
-          <div className="digit-error-icon">
-            <SVG.Info width="1rem" height="1rem" fill="#D4351C" />
-          </div>
-          <ErrorMessage message={t(truncateMessage(error, 256))} />
-        </div>
+        <ErrorMessage
+          message={t(error)}
+          truncateMessage={true}
+          maxLength={256}
+          showIcon={true}
+        />
       );
     } else if (description) {
       return (
         <CardText
           style={{
-            width: !charCount ? "100%" : "90%",
+            width: "100%",
             whiteSpace: "pre-wrap",
             wordBreak: "break-word",
             marginTop: "0px",
@@ -104,7 +106,12 @@ const FieldV1 = ({
             lineHeight: "1.5rem",
           }}
         >
-          {t(truncateMessage(description, 256))}
+          {StringManipulator(
+            "TOSENTENCECASE",
+            StringManipulator("TRUNCATESTRING", t(description), {
+              maxLength: 256,
+            })
+          )}
         </CardText>
       );
     }
@@ -125,7 +132,7 @@ const FieldV1 = ({
           <TextInput
             type={type}
             value={value}
-            name={populators.name}
+            name={populators?.name}
             onChange={onChange}
             error={error}
             disabled={disabled}
@@ -136,7 +143,7 @@ const FieldV1 = ({
             populators={populators}
             inputRef={ref}
             step={config?.step}
-            errorStyle={errors?.[populators.name]}
+            errorStyle={errors?.[populators?.name]}
             max={populators?.validation?.max}
             min={populators?.validation?.min}
             maxlength={populators?.validation?.maxlength}
@@ -144,8 +151,6 @@ const FieldV1 = ({
             customIcon={populators?.customIcon}
             customClass={populators?.customClass}
             onIconSelection={populators?.onIconSelection}
-            editableDate={populators?.editableDate}
-            editableTime={populators?.editableTime}
           />
         );
       case "textarea":
@@ -154,7 +159,7 @@ const FieldV1 = ({
             <TextArea
               type={type}
               value={value}
-              name={populators.name}
+              name={populators?.name}
               onChange={onChange}
               error={error}
               disabled={disabled}
@@ -164,7 +169,7 @@ const FieldV1 = ({
               required={required}
               populators={populators}
               inputRef={ref}
-              errorStyle={errors?.[populators.name]}
+              errorStyle={errors?.[populators?.name]}
               maxlength={populators?.validation?.maxlength}
               minlength={populators?.validation?.minlength}
             />
@@ -186,8 +191,14 @@ const FieldV1 = ({
             onChange={onChange}
             config={populators}
             disabled={disabled}
-            errorStyle={errors?.[populators.name]}
-            variant={variant ? variant : errors?.[populators.name] ? "digit-field-error" : ""}
+            errorStyle={errors?.[populators?.name]}
+            variant={
+              variant
+                ? variant
+                : errors?.[populators?.name]
+                ? "digit-field-error"
+                : ""
+            }
           />
         );
       case "checkbox":
@@ -198,7 +209,8 @@ const FieldV1 = ({
                 onChange(e.target.checked);
               }}
               value={value}
-              checked={formData?.[populators.name]}
+              checked={formData?.[populators?.name]}
+              isIntermediate={populators?.isIntermediate}
               label={t(`${populators?.title}`)}
               styles={populators?.styles}
               style={populators?.labelStyles}
@@ -210,10 +222,11 @@ const FieldV1 = ({
         );
       case "multiselectdropdown":
         return (
-          <div style={{ display: "grid", gridAutoFlow: "row" }}>
+          <div style={{ display: "grid", gridAutoFlow: "row", width: "100%" }}>
             <MultiSelectDropdown
               options={populators?.options}
               optionsKey={populators?.optionsKey}
+              chipsKey={populators?.chipsKey}
               props={props}
               isPropsNeeded={true}
               onSelect={(e) => {
@@ -231,13 +244,25 @@ const FieldV1 = ({
               config={populators}
               disabled={disabled}
               variant={variant}
+              addSelectAllCheck={populators?.addSelectAllCheck}
+              addCategorySelectAllCheck={populators?.addCategorySelectAllCheck}
+              selectAllLabel={populators?.selectAllLabel}
+              categorySelectAllLabel={populators?.categorySelectAllLabel}
+              restrictSelection={populators?.restrictSelection}
+              isSearchable={populators?.isSearchable}
             />
           </div>
         );
       case "mobileNumber":
         return (
           <div className="digit-field-container">
-            <MobileNumber inputRef={ref} onChange={onChange} value={value} disable={disabled} errorStyle={errors?.[populators.name]} />
+            <MobileNumber
+              inputRef={ref}
+              onChange={onChange}
+              value={value}
+              disable={disabled}
+              errorStyle={errors?.[populators?.name]}
+            />
           </div>
         );
       case "component":
@@ -268,6 +293,7 @@ const FieldV1 = ({
       case "documentUpload":
         return (
           <UploadFileComposer
+            mdmsModuleName={config?.mdmsModuleName}
             module={config?.module}
             config={config}
             Controller={Controller} // TODO: NEED TO DISCUSS ON THIS
@@ -278,7 +304,13 @@ const FieldV1 = ({
             customClass={config?.customClass}
             customErrorMsg={config?.error}
             localePrefix={config?.localePrefix}
-            variant={variant ? variant : errors?.[populators.name] ? "digit-field-error" : ""}
+            variant={
+              variant
+                ? variant
+                : errors?.[populators?.name]
+                ? "digit-field-error"
+                : ""
+            }
           />
         );
       case "custom":
@@ -286,12 +318,12 @@ const FieldV1 = ({
       case "amount":
         return (
           <InputTextAmount
-            value={formData?.[populators.name]}
+            value={formData?.[populators?.name]}
             type={"text"}
-            name={populators.name}
+            name={populators?.name}
             onChange={onChange}
             inputRef={ref}
-            errorStyle={errors?.[populators.name]}
+            errorStyle={errors?.[populators?.name]}
             max={populators?.validation?.max}
             min={populators?.validation?.min}
             disable={disabled}
@@ -302,7 +334,13 @@ const FieldV1 = ({
             customClass={populators?.customClass}
             prefix={populators?.prefix}
             intlConfig={populators?.intlConfig}
-            variant={variant ? variant : errors?.[populators.name] ? "digit-field-error" : ""}
+            variant={
+              variant
+                ? variant
+                : errors?.[populators?.name]
+                ? "digit-field-error"
+                : ""
+            }
           />
         );
       default:
@@ -311,34 +349,65 @@ const FieldV1 = ({
   };
 
   return (
-    <>
+    <div className="label-field-wrapper">
       {!withoutLabel && (
-        <Header className={`label ${disabled ? "disabled" : ""} ${nonEditable ? "noneditable" : ""} ${populators?.wrapLabel ? "wraplabel" : ""}`}>
-          <div className={"label-container"}>
-            <div className={`label-styles ${populators?.wrapLabel ? "wraplabel" : ""}`}>
-              {populators?.wrapLabel ? t(label) : t(truncateMessage(label, 64))}
+        <Header
+          className={`label ${disabled ? "disabled" : ""} ${
+            nonEditable ? "noneditable" : ""
+          } ${populators?.wrapLabel ? "wraplabel" : ""}`}
+        >
+          <div
+            className={`label-container ${
+              populators?.wrapLabel ? "wraplabel" : ""
+            }`}
+          >
+            <div
+              className={`label-styles ${
+                populators?.wrapLabel ? "wraplabel" : ""
+              }`}
+            >
+              {StringManipulator(
+                "TOSENTENCECASE",
+                StringManipulator("TRUNCATESTRING", t(label), {
+                  maxLength: 64,
+                })
+              )}
             </div>
-            <div style={{ color: "#D4351C" }}>{required ? " * " : null}</div>
+            <div style={{ color: "#B91900" }}>{required ? " * " : null}</div>
             {infoMessage ? (
               <div className="info-icon">
-                <SVG.InfoOutline width="1.1875rem" height="1.1875rem" fill="#505A5F" />
-                <span class="infotext">{infoMessage}</span>
+                <SVG.InfoOutline
+                  width="1.1875rem"
+                  height="1.1875rem"
+                  fill="#505A5F"
+                />
+                <span class="infotext">{t(infoMessage)}</span>
               </div>
             ) : null}
           </div>
         </Header>
       )}
       <div
-        style={withoutLabel ? { width: "100%", ...props?.fieldStyle, marginBottom: "24px" } : { ...props?.fieldStyle, marginBottom: "24px" }}
+        style={
+          withoutLabel
+            ? { width: "100%", ...props?.fieldStyle, marginBottom: "24px" }
+            : { ...props?.fieldStyle, marginBottom: "24px" }
+        }
         className="digit-field"
       >
         {renderField()}
-        <div className={`${charCount && !error && !description ? "digit-charcount" : "digit-description"}`}>
+        <div
+          className={`${
+            charCount && !error && !description
+              ? "digit-charcount"
+              : "digit-description"
+          }`}
+        >
           {renderDescriptionOrError()}
           {renderCharCount()}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

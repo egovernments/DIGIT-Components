@@ -1,8 +1,10 @@
+import { Accordion } from "./Accordion";
+import {AccordionWrapper} from "./Accordion";
 import ActionBar from "./ActionBar";
 import ActionLinks from "./ActionLinks";
 import Amount from "./Amount";
 import AppContainer from "./AppContainer";
-import BackButton from "./BackButton";
+import BackLink from "./BackLink";
 import Banner from "./Banner";
 import BodyContainer from "./BodyContainer";
 import BreadCrumb from "./BreadCrumb";
@@ -28,6 +30,7 @@ import Footer from "./Footer";
 import Header from "./Header";
 import HeaderBar from "./HeaderBar";
 import HorizontalNav from "./HorizontalNav";
+import Tab from "./Tab";
 import InfoCard from "./InfoCard";
 import InputTextAmount from "./InputTextAmount";
 import KeyNote from "./KeyNote";
@@ -44,7 +47,7 @@ import PopUp from "./PopUp";
 import { PrivateRoute } from "./PrivateRoute";
 import RadioButtons from "./RadioButtons";
 import Rating from "./Rating";
-import RemoveableTag from "./RemoveableTag";
+import Chip from "./Chip";
 import { SVG } from "./SVG";
 // import Table from "./Table";
 import Telephone from "./Telephone";
@@ -65,151 +68,52 @@ import SearchComponent from "./SearchComponent";
 import LinkLabel from "./LinkLabel";
 import RoundedLabel from "./RoundedLabel";
 import Stepper from "./Stepper";
-
-import {
-  AnnouncementIcon,
-  Calender,
-  CitizenTruck,
-  ComplaintIcon,
-  DocumentSVG,
-  DropIcon,
-  EmailIcon,
-  FilterIcon,
-  FilterSvg,
-  Person,
-  PersonIcon,
-  PrintIcon,
-  ReceiptIcon,
-  RupeeIcon,
-  ShareIcon,
-  WhatsappIcon,
-  OBPSIcon,
-  EDCRIcon,
-  BPAIcon,
-  BPAHomeIcon,
-  PDFSvg,
-  DownloadPrefixIcon,
-  TickMark,
-  MapMarker,
-  Clock,
-  EventCalendar,
-  EditIcon,
-  SearchIcon,
-  DeleteIcon,
-  CreateLoiIcon,
-  WSICon,
-  ArrowForward,
-  ArrowVectorDown,
-  ArrowDirection,
-  CameraIcon,
-  EditPencilIcon,
-  GalleryIcon,
-  RemoveIcon,
-  CheckSvg,
-  AddressBookIcon,
-  LocationIcon,
-  CollectionsBookmarIcons,
-  FinanceChartIcon,
-  CollectionIcon,
-  FSMIcon,
-  MCollectIcon,
-  PGRIcon,
-  TLIcon,
-  BillsIcon,
-  ErrorIcon,
-  PrintBtnCommon,
-  WhatsappIconGreen,
-  HelpLineIcon,
-  ServiceCenterIcon,
-  TimerIcon,
-  RupeeSymbol,
-  ValidityTimeIcon,
-  AddIcon,
-  SubtractIcon,
-  AddNewIcon,
-  InboxIcon,
-  ViewReportIcon,
-  PrivacyMaskIcon,
-  DeathIcon,
-  BirthIcon,
-  FirenocIcon,
-  CreateEstimateIcon,
-  GotoInboxIcon,
-  LocateIcon,
-  CaseIcon,
-  CloseSvg,
-  Close,
-  Details,
-  DownloadIcon,
-  DownloadImgIcon,
-  DownwardArrow,
-  Ellipsis,
-  GetApp,
-  HomeIcon,
-  PrevIcon,
-  ViewsIcon,
-  LanguageIcon,
-  LogoutIcon,
-  Poll,
-  PropertyHouse,
-  PTIcon,
-  RefreshIcon,
-  RefreshSVG,
-  OBPSIconSolidBg,
-  DocumentIconSolid,
-  PMBIconSolid,
-  EventsIconSolid,
-  SurveyIconSolid,
-  DustbinIcon,
-  InfoBannerIcon,
-  AddFilled,
-  AddFileFilled,
-  ImageIcon,
-  NotificationBell,
-  HelpIcon,
-  DocumentIcon,
-  ExternalLinkIcon,
-  PMBIcon,
-  ShippingTruck,
-  SortDown,
-  SortSvg,
-  GenericFileIcon,
-  SortUp,
-  UpwardArrow,
-  ArrowDown,
-  ArrowLeft,
-  ArrowLeftWhite,
-  ArrowRightInbox,
-  SearchIconSvg,
-
-  /* Works Management  */
-  NoResultsFoundIcon,
-  WorksMgmtIcon,
-  BioMetricIcon,
-  MuktaHomeIcon,
-  HRIcon,
-  ProjectIcon,
-  EstimateIcon,
-  ContractIcon,
-  AttendanceIcon,
-  WageseekerIcon,
-  OrganisationIcon,
-  HelperIcon,
-  DashboardIcon,
-  ExpenditureIcon,
-  PaymentIcon,
-} from "./svgindex";
-
-import { Phone } from "./svgindex";
-import { DownloadBtnCommon } from "./svgindex";
+import Timeline from "./Timeline";
+import StringManipulator from "./StringManipulator";
+import InfoButton from "./InfoButton";
+import Uploader  from "./Uploader";
+import UploadPopup from "./UploadPopup";
+import UploadImage from "./UploadImage";
+import ErrorBoundary from "./ErrorBoundary";
+import TextBlock from "./TextBlock";
+import Panels from "./Panels";
+import Animation from "./Animation";
+import ViewCardFieldPair from "./ViewCardFieldPair";
+import ButtonsGroup from "./ButtonsGroup";
+import Divider from "./Divider";
+import TopBar from "./TopBar";
+import Hamburger from "./Hamburger";
+import Menu from "./Menu";
+import Sidebar from "./Sidebar";
+import MobileSidebar from "./MobileSidebar";
+import SelectionCard from "./SelectionCard";
+import Tag from "./Tag";
+import Tooltip from "./Tooltip";
+import Switch from "./Switch";
+import { CustomSVG } from "./CustomSVG";
+import TableMain from "./TableMain";
+import TableBody from "./TableBody";
+import TableCell from "./TableCell";
+import TableFooter from "./TableFooter";
+import TableHeader from "./TableHeader";
+import TableRow from "./TableRow";
+import SlideOverMenu from "./SlideOverMenu";
+import NestedTable from "./NestedTable";
 
 export {
+  ErrorBoundary,
   PageBasedInput,
   ActionBar,
   ActionLinks,
   Amount,
   AppContainer,
-  BackButton,
+  BackLink,
+  Sidebar,
+  MobileSidebar,
+  Switch,
+  Accordion,
+  AccordionWrapper,
+  Tooltip,
   Banner,
   BodyContainer,
   BreadCrumb,
@@ -235,6 +139,7 @@ export {
   Header,
   HeaderBar,
   HorizontalNav,
+  Tab,
   InfoCard,
   InputTextAmount,
   KeyNote,
@@ -245,14 +150,20 @@ export {
   MultiSelectDropdown,
   NoResultsFound,
   OTPInput,
+  SlideOverMenu,
   Paragraph,
   PlusMinusInput,
   PopUp,
+  SelectionCard,
+  Tag,
   PrivateRoute,
   RadioButtons,
   Rating,
-  RemoveableTag,
+  Chip,
   SVG,
+  TopBar,
+  Hamburger,
+  Menu,
   // Table,
   Telephone,
   TextArea,
@@ -266,142 +177,29 @@ export {
   SubmitBar,
   ButtonSelector,
   Stepper,
+  Timeline,
+  ViewCardFieldPair,
+  Divider,
+  ButtonsGroup,
+  StringManipulator,
+  InfoButton,
+  Uploader,
+  UploadPopup,
+  UploadImage,
+  TextBlock,
+  Panels,
+  Animation,
   InboxSearchLinks,
   SearchComponent,
   LinkLabel,
   RoundedLabel,
   //Icons
-  FilterIcon,
-  FilterSvg,
-  PrintIcon,
-  ShareIcon,
-  Calender,
-  DropIcon,
-  RupeeIcon,
-  ComplaintIcon,
-  Person,
-  WhatsappIcon,
-  EmailIcon,
-  DocumentSVG,
-  PersonIcon,
-  ReceiptIcon,
-  AnnouncementIcon,
-  OBPSIcon,
-  CitizenTruck,
-  EDCRIcon,
-  BPAIcon,
-  BPAHomeIcon,
-  MapMarker,
-  Clock,
-  EventCalendar,
-  TickMark,
-  PDFSvg,
-  DownloadPrefixIcon,
-  EditIcon,
-  SearchIcon,
-  DeleteIcon,
-  CreateLoiIcon,
-  WSICon,
-  CameraIcon,
-  EditPencilIcon,
-  GalleryIcon,
-  RemoveIcon,
-  CheckSvg,
-  ArrowForward,
-  ArrowVectorDown,
-  ArrowDirection,
-  AddressBookIcon,
-  LocationIcon,
-  CollectionsBookmarIcons,
-  FinanceChartIcon,
-  CollectionIcon,
-  FSMIcon,
-  MCollectIcon,
-  PGRIcon,
-  TLIcon,
-  BillsIcon,
-  ErrorIcon,
-  DownloadBtnCommon,
-  PrintBtnCommon,
-  WhatsappIconGreen,
-  HelpLineIcon,
-  ServiceCenterIcon,
-  TimerIcon,
-  RupeeSymbol,
-  ValidityTimeIcon,
-  AddIcon,
-  SubtractIcon,
-  AddNewIcon,
-  ViewReportIcon,
-  InboxIcon,
-  PrivacyMaskIcon,
-  DeathIcon,
-  BirthIcon,
-  FirenocIcon,
-  CreateEstimateIcon,
-  GotoInboxIcon,
-  LocateIcon,
-  /* Works Management  */
-
-  NoResultsFoundIcon,
-  WorksMgmtIcon,
-  BioMetricIcon,
-  MuktaHomeIcon,
-  HRIcon,
-  ProjectIcon,
-  EstimateIcon,
-  ContractIcon,
-  AttendanceIcon,
-  WageseekerIcon,
-  OrganisationIcon,
-  HelperIcon,
-  DashboardIcon,
-  ExpenditureIcon,
-  PaymentIcon,
-  Phone,
-  CaseIcon,
-  CloseSvg,
-  Close,
-  Details,
-  DownloadIcon,
-  DownloadImgIcon,
-  DownwardArrow,
-  Ellipsis,
-  GetApp,
-  HomeIcon,
-  PrevIcon,
-  ViewsIcon,
-  LanguageIcon,
-  LogoutIcon,
-  Poll,
-  PropertyHouse,
-  PTIcon,
-  RefreshIcon,
-  RefreshSVG,
-  OBPSIconSolidBg,
-  DocumentIconSolid,
-  PMBIconSolid,
-  EventsIconSolid,
-  SurveyIconSolid,
-  DustbinIcon,
-  InfoBannerIcon,
-  AddFilled,
-  AddFileFilled,
-  ImageIcon,
-  NotificationBell,
-  HelpIcon,
-  DocumentIcon,
-  ExternalLinkIcon,
-  PMBIcon,
-  ShippingTruck,
-  SortDown,
-  SortSvg,
-  GenericFileIcon,
-  SortUp,
-  UpwardArrow,
-  ArrowDown,
-  ArrowLeft,
-  ArrowLeftWhite,
-  ArrowRightInbox,
-  SearchIconSvg,
+  CustomSVG,
+  TableMain,
+  TableHeader,
+  TableFooter,
+  TableBody,
+  TableRow,
+  TableCell,
+  NestedTable
 };

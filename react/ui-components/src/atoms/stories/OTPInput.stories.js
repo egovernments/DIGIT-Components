@@ -1,68 +1,82 @@
-import React from "react";
-import { action } from "@storybook/addon-actions";
+import React, { useState } from "react";
 import OTPInput from "../OTPInput";
 
 export default {
   title: "Atoms/OTPInput",
   component: OTPInput,
+  argTypes: {
+    className: {
+      control: "text",
+    },
+    style: {
+      control: { type: "object" },
+    },
+    inline: {
+      control: "boolean",
+    },
+    label: {
+      control: "text",
+    },
+  },
 };
 
-const Template = (args) => <OTPInput {...args} />;
+const Template = (args) => {
+  const [otp, setOtp] = useState("");
 
-const defaultProps = {
+  const handleOtpChange = (value) => {
+    setOtp(value);
+    if (value.length === args.length) {
+      const isValid = value.includes(1); 
+      if (isValid) {
+        console.log("OTP is correct");
+        return null; 
+      } else {
+        console.log("Invalid OTP");
+        return "Invalid OTP";
+      }
+    }
+    return null; 
+  };
+
+  return <OTPInput {...args} onChange={handleOtpChange} />;
+};
+
+const commonArgs = {
   length: 6,
-  value: "",
-  onChange: action("onChange"),
+  type: "numeric",
+  inline: false,
+  label: "Enter OTP",
 };
 
 export const Default = Template.bind({});
 Default.args = {
-  ...defaultProps,
+  ...commonArgs,
 };
 
-// Create a Story for the OTPInput component with a value and length
-export const WithValue = Template.bind({});
-WithValue.args = {
-  ...defaultProps,
-  value: "123456",
+export const Inline = Template.bind({});
+Inline.args = {
+  ...commonArgs,
+  inline: true,
 };
 
-// Create a Story for the OTPInput component with a different length
+export const Alphanumeric = Template.bind({});
+Alphanumeric.args = {
+  ...commonArgs,
+  length: 6,
+  type: "alphanumeric",
+};
+
 export const CustomLength = Template.bind({});
 CustomLength.args = {
-  ...defaultProps,
-  length: 4,
+  ...commonArgs,
+  length: 8,
+  type: "numeric",
 };
 
-// Create a Story for the OTPInput component with a focused input
-export const FocusedInput = Template.bind({});
-FocusedInput.args = {
-  ...defaultProps,
-  value: "1",
-  isFocus: true,
-};
-
-// Create a Story for the OTPInput component with disabled inputs
-export const DisabledInputs = Template.bind({});
-DisabledInputs.args = {
-  ...defaultProps,
-  value: "123456",
-  disable: true,
-};
-
-// Create a Story for the OTPInput component with error styling
-export const ErrorStyle = Template.bind({});
-ErrorStyle.args = {
-  ...defaultProps,
-  value: "12",
-  errorStyle: true,
-};
-
-// Create a Story for the OTPInput component with a custom className and style
-export const CustomStyle = Template.bind({});
-CustomStyle.args = {
-  ...defaultProps,
-  value: "123456",
-  className: "custom-otp-input",
-  style: { color: "red", fontWeight: "bold" },
+export const WithPlaceholder = Template.bind({});
+WithPlaceholder.args = {
+  ...commonArgs,
+  length: 6,
+  type: "numeric",
+  placeholder: "123456",
 };
